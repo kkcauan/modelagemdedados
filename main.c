@@ -108,9 +108,9 @@ void concatenar() {
     int primeiro = 1;
 
     while ((e = readdir(dir)) != NULL) {
-        if (strstr(e->d_name, ".csv") &&
-            strcmp(e->d_name, "concatenado.csv") != 0 &&
-            strcmp(e->d_name, "resumo.csv") != 0) {
+
+        // só pega os csv originais
+        if (strstr(e->d_name, "teste_") && strstr(e->d_name, ".csv")) {
 
             FILE *arq = fopen(e->d_name, "r");
             if (!arq) continue;
@@ -118,6 +118,8 @@ void concatenar() {
             int cab = 1;
 
             while (fgets(linha, sizeof(linha), arq)) {
+
+                // evita repetir cabeçalho
                 if (!primeiro && cab) {
                     cab = 0;
                     continue;
